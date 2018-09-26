@@ -6,7 +6,7 @@ substring, supongamos que la palabra ```password``` cifrado en MD5 es ```5f4dcc3
 
 Ejemplo de uso
 ```
-python crackMD5.py --wordlist /usr/share/wordlist/rockyou.txt  --range 1,27 
+python crackMD5.py --wordlist /usr/share/wordlist/rockyou.txt --hash_file hashes.txt --range 1,27 
 ```
 ![Alt text](galeria/crackMD5.png "Fuerza bruta a HASH MD5 modificado")
 
