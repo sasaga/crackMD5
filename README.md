@@ -1,7 +1,7 @@
 # crackMD5
 
 crackMD5 es un script desarollado en python que permite atacar por fuerza bruta a traves de diccionario un hash MD5 que ha sido modificado a traves de metodos como
-substring, supongamos que la palabra ```password``` cifrado en MD5 en ```5f4dcc3b5aa765d61d8327deb882cf99``` aplicando el metodo substring hash.[1:27] nos quedaria como resultado ```f4dcc3b5aa765d61d8327deb88```.
+substring, supongamos que la palabra ```password``` cifrado en MD5 es ```5f4dcc3b5aa765d61d8327deb882cf99``` aplicando el metodo substring hash.[1:27] nos quedaria como resultado ```f4dcc3b5aa765d61d8327deb88```.
 
 
 Ejemplo de uso
