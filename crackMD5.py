@@ -58,9 +58,9 @@ def banner_welcome():
                              ██║     ██╔══██╗██╔══██║██║     ██╔═██╗ ██║╚██╔╝██║██║  ██║╚════██║
                              ╚██████╗██║  ██║██║  ██║╚██████╗██║  ██╗██║ ╚═╝ ██║██████╔╝███████║
                               ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═════╝ ╚══════╝
-                                                                version: 1.0
-                                                Autor: Samir Sanchez Garnica
-                                                                   @sasaga92
+                                                                                    version: 1.0
+                                                                    Autor: Samir Sanchez Garnica
+                                                                                       @sasaga92
                                                                      
     '''
     return script_colors('lgray',banner)
