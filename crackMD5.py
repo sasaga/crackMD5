@@ -76,7 +76,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--wordlist", dest="wordlist", help="introduce el path del diccionario", required=True)
     parser.add_argument("--range", dest="range", help="rango de recorte del hash inicial,final", required=True)
-    parser.add_argument("--hash", dest="hash", help="introducir hash MD5 modificado a crackear", required=True)
+    parser.add_argument("--hash_file", dest="hash_file", help="introducir hash MD5 modificado a crackear", required=True)
 
     args = parser.parse_args()
     range_part = str(args.range).split(",")
@@ -86,23 +86,42 @@ def main():
 
     tiempo_inicial = time()
     
-    print script_colors("g", "[+] ") + script_colors("c", "Iniciando cracking  para HASH: ") + script_colors("red",args.hash)  + script_colors("c",time_actual[0]) + script_colors("red",time_actual[1])
+    credenciales_search = {}
 
-    if args.wordlist and args.hash and args.range:
+    archivo_hashes = open(args.hash_file, 'r')
+    archivo_passwords = open(args.wordlist, 'r')
+ 
+    num_archivo_hashes =  len(archivo_hashes.readlines())
+    num_archivo_passwords =  len(archivo_passwords.readlines())
+    
+    archivo_hashes.close()
+    archivo_passwords.close()
+
+    print script_colors("g", "[+] ") + script_colors("c", "Iniciando cracking: ") + script_colors("c",time_actual[0]) + script_colors("red",time_actual[1]) + script_colors("c", " Numero de HASHES:") + script_colors("yellow",str(num_archivo_hashes)) + script_colors("c", " Numero de CONTRASEÑAS:") + script_colors("yellow",str(num_archivo_passwords))
+
+    if args.wordlist and args.hash_file and args.range:
         with open(args.wordlist,'r') as infile:
             for line in infile:
                 password = line.strip('\r\n')
                 password_hasheado = convertMS5Hash(password,int(range_part[0]),int(range_part[1]));
                 try:
-                    if password_hasheado == args.hash:
-                        print script_colors("lgray","[+] HASH encontrado: ")  + script_colors("lgray","credenciales:[") + script_colors("cf", str(args.hash)) +  ":" + script_colors("g", str(password)) + "]"+script_colors("b"," Contraseña Correcta")
-                        break
-                    else:
-                        print script_colors("lgray","[-] Probando HASH: ") + script_colors("lgray","credenciales:") + " " + script_colors("cf", str(args.hash)) +  ":" + script_colors("c", str(password)) + script_colors("r"," Contraseña incorrecta")
+                   with open(args.hash_file, 'r') as inhashes:
+                     for hashes in inhashes:
+                        hash_clean = hashes.strip('\r\n')
+
+                        if password_hasheado == hash_clean:
+                            credenciales_search[password_hasheado] = [password]
                 except:
                     pass
         tiempo_final = time()
         tiempo_ejecucion = tiempo_final - tiempo_inicial
+
+        if not credenciales_search:
+            print script_colors("lgray","[-] no se encontraron CREDENCIALES para el crackeo de los  HASHES :( ");
+        else:
+            for hashes in credenciales_search:
+                print script_colors("lgray","[+] HASH encontrado: ")  + script_colors("lgray","credenciales:[") + script_colors("cf", str(hashes)) +  ":" + script_colors("g", str(credenciales_search[hashes][0])) + "]"+script_colors("b"," Contraseña Correcta")
+
         print script_colors("lgray","crackeo realizado en: ") + script_colors("c", str(int(tiempo_ejecucion))) + script_colors("lgray"," Segundos")
     else:
         print script_colors("yellow","[-] ") + script_colors("c", "Requiere parametros obligatorios ")
